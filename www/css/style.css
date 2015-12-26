@@ -1,0 +1,32 @@
+/* Empty. Add your own CSS if you like */
+.block {
+  display: block;
+}
+
+.large-font {
+  font-size: 64px;
+}
+
+.red {
+  color: #FF0000;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.margin-top-0 {
+  margin-top: 0;
+}
+
+.padding-10 {
+  padding: 10px;
+}

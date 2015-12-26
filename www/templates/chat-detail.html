@@ -1,0 +1,32 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="添加车辆">
+  <ion-content >
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">车牌号</span>
+        <input type="text" placeholder="必须填" ng-model="car.carnumber" >
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">车型</span>
+        <input type="text" placeholder="可不填" ng-model="car.title" >
+      </label>
+      <label class="item item-toggle">
+        是否为公车
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" ng-model="car.public" >
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </label>
+    </div>
+    <div class="padding">
+      <button class="button button-block button-positive" ng-click="saveCar()">保 存</button>
+    </div>
+  </ion-content>
+</ion-view>

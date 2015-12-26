@@ -1,0 +1,20 @@
+<ion-view view-title="我的车辆">
+  <ion-nav-buttons side="right">
+    <a class="button button-clear button-positive" style="margin-right: 15px;" href="#/tab/chats/0">添加</a>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="car in cars" type="item-text-wrap" href="#">
+        <img ng-src="img/{{car.type?'car-public.png':'car-private.png'}}">
+        <h2>{{car.type?'公车':'私车'}} : {{car.carnumber}}</h2>
+        <p>{{car.title}}</p>
+
+        <i class="icon ion-chevron-left icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(car)">
+          删 除
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
