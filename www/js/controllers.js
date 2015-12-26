@@ -144,7 +144,9 @@ angular.module('starter.controllers', [])
       $scope.cars.push(Cars.new);
       delete Cars.new;
     }
-    $scope.$apply();
+    $timeout(function(){
+      $scope.$apply();
+    });
   });
 
   $scope.remove = function(car){
@@ -157,15 +159,14 @@ angular.module('starter.controllers', [])
 })
 // -- 添加车辆 --
 .controller('ChatDetailCtrl', function($scope, $stateParams, $ionicHistory, $log, Cars) {
-  $scope.car = {carnumber:'', title:''};
+  $scope.car = {carnumber:'', title:'', };
   $scope.saveCar = function(){
-    // $log.debug($scope.car);
+    //add car type
+    $scope.car.type = $scope.car.public ? 1 : 0;
     //save the car
     Cars.new = $scope.car;
 
-    // carnumber,title,status,type
-    var type = $scope.car.public ? 1 : 0;
-    Cars.insert($scope.car.carnumber, $scope.car.title, 0, type).then(function(){
+    Cars.insert($scope.car.carnumber, $scope.car.title, 0, $scope.car.type).then(function(){
       $ionicHistory.goBack();
     });
   };
