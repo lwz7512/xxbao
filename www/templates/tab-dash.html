@@ -1,4 +1,4 @@
-<ion-view view-title="今日限行尾号">
+<ion-view view-title="今日({{todayName}})限行尾号">
   <ion-content class="padding">
     <div class="list card margin-top-0">
       <!-- <div class="item item-divider">今日限行尾号</div> -->
@@ -36,6 +36,9 @@
               {{car.status?'已派':'派车'}}
             </button>
           </div>
+          <p class="advanced-panel" ng-if="!availableCars.length">
+            您需要在车辆管理中添加
+          </p>
         </div>
       </div>
     </div>

@@ -47,11 +47,10 @@ angular.module('starter.controllers', [])
 
   $scope.car = {};
   $scope.todayNums = [];//今日限行尾号
-
+  $scope.todayName = moment.weekdays()[moment().day()];
   $scope.validPeriod = '2015年4月13日 ~ 2016年4月10日';
   var now = moment();
   if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
-
   //Today available cars...
   $scope.availableCars = [];
 
@@ -107,18 +106,18 @@ angular.module('starter.controllers', [])
     });
   };
 
-  //check sqlite status on first display
-  //@2014/12/31
-  $rootScope.$on('dbReady', function(){//listen on the DB service dispatched event
-    self.init();
-    self.filter();
-  });
   // while switch in from other menu
   $scope.$on('$ionicView.enter', function(e) {
     if (!DB.available) return;
 
     $scope.showHalfStop();
   });
+
+  $timeout(function(){
+    self.filter();
+  }, 500);//waiting database available...
+
+  self.init();
 })
 // -- 车辆管理 --
 .controller('ChatsCtrl', function($scope, $log, $timeout, Cars) {
