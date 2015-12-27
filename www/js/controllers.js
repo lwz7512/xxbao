@@ -123,9 +123,9 @@ angular.module('starter.controllers', [])
 .controller('ChatsCtrl', function($scope, $log, $timeout, Cars) {
   var self = this;
 
-  self.update = function(car){
+  self.update = function(carid){
     for(var i in $scope.cars){
-      if($scope.cars[i]==car){
+      if($scope.cars[i].id == carid){
         $scope.cars.splice(i, 1);
         $timeout(function(){
           $scope.$apply();
@@ -148,10 +148,10 @@ angular.module('starter.controllers', [])
     });
   });
 
-  $scope.remove = function(car){
-    $log.debug('delete: '+car.id);
-    Cars.deleteById(car.id).then(function(){
-      self.update(car);
+  $scope.remove = function(carid){
+    // $log.debug('delete: '+carid);
+    Cars.deleteById(carid).then(function(result){
+      self.update(carid);
     });
   };
 
@@ -162,10 +162,12 @@ angular.module('starter.controllers', [])
   $scope.saveCar = function(){
     //add car type
     $scope.car.type = $scope.car.public ? 1 : 0;
-    //save the car
-    Cars.new = $scope.car;
 
-    Cars.insert($scope.car.carnumber, $scope.car.title, 0, $scope.car.type).then(function(){
+    Cars.insert($scope.car.carnumber, $scope.car.title, 0, $scope.car.type).then(function(result){
+      //save the car
+      Cars.new = $scope.car;
+      Cars.new.id = result.insertId;//FIXED, remember the new car id @2015/12/28
+
       $ionicHistory.goBack();
     });
   };
