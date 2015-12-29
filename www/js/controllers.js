@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('GlobalCtrl', function($scope, $rootScope, $log, $ionicLoading, $ionicPopup){
-    // Setup the loader
+  // Setup the loader
   $scope.show = function() {
     $ionicLoading.show({
       // template: 'loading...',
@@ -25,7 +25,6 @@ angular.module('starter.controllers', [])
     });
   };
 
-
   $scope.$on('refresh', function(event){
     $scope.show();
   });
@@ -47,21 +46,29 @@ angular.module('starter.controllers', [])
 
   $scope.car = {};
   $scope.todayNums = [];//今日限行尾号
-  $scope.todayName = moment.weekdays()[moment().day()];
+  $scope.todayName = moment.weekdays()[moment().day()];//星期几？
   $scope.validPeriod = '2015年4月13日 ~ 2016年4月10日';
   var now = moment();
   if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
   //Today available cars...
   $scope.availableCars = [];
+  $scope.totalCars = [];
+
+  self.init = function(){
+    // var todayCtrlNum = '4,9';
+    var todayCtrlNum = Calculator.calculate();
+    $scope.todayNums = todayCtrlNum.split(',');
+  }
 
   self.filter = function(){
     var toRemoved = [];
     Cars.all().then(function(result){
+      $scope.totalCars = result;
       $scope.availableCars = result;
       for(var i in $scope.availableCars){
         var carnumber = $scope.availableCars[i]['carnumber'];
         var tailNum = carnumber.substr(carnumber.length-1);
-        //私家车按尾号轮换
+        //按尾号轮换
         if($scope.todayNums.indexOf(tailNum)>-1){
           toRemoved.push($scope.availableCars[i]);
         }
@@ -71,12 +78,6 @@ angular.module('starter.controllers', [])
         $scope.availableCars.splice(index, 1);
       }
     });
-  }
-
-  self.init = function(){
-    // var todayCtrlNum = '4,9';
-    var todayCtrlNum = Calculator.calculate();
-    $scope.todayNums = todayCtrlNum.split(',');
   }
 
   $scope.showHalfStop = function(){
@@ -99,7 +100,7 @@ angular.module('starter.controllers', [])
     // $log.debug(car);
     car.status = car.status?0:1;//已派
     Cars.update(car).then(function(){
-      $log.debug('update success!');
+      // $log.debug('update success!');
       $timeout(function(){
         $scope.$apply();
       });
@@ -160,9 +161,10 @@ angular.module('starter.controllers', [])
 .controller('ChatDetailCtrl', function($scope, $stateParams, $ionicHistory, $log, Cars) {
   $scope.car = {carnumber:'', title:'', };
   $scope.saveCar = function(){
+    if(!$scope.car.carnumber || !$scope.car.title) return;//blank check
+
     //add car type
     $scope.car.type = $scope.car.public ? 1 : 0;
-
     Cars.insert($scope.car.carnumber, $scope.car.title, 0, $scope.car.type).then(function(result){
       //save the car
       Cars.new = $scope.car;

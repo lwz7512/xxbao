@@ -37,7 +37,7 @@
             </button>
           </div>
           <p class="advanced-panel" ng-if="!availableCars.length">
-            您需要在车辆管理中添加
+            {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
           </p>
         </div>
       </div>
