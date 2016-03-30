@@ -11,12 +11,20 @@
   color: #FF0000;
 }
 
+.dark-less {
+  color: #999;
+}
+
 .center {
   text-align: center;
 }
 
 .right {
   text-align: right;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
 }
 
 .margin-top-20 {
@@ -29,4 +37,38 @@
 
 .padding-10 {
   padding: 10px;
+}
+
+.padding-top-6 {
+  padding-top: 6px;
+}
+
+.logo-ctnr {
+  position: relative;
+  margin: 50px auto;
+  max-width: 240px;
+  height: 96px;
+  /*background: #ccc;*/
+}
+
+img.center {
+  display:block;
+  margin:0 auto;
+}
+
+.version-ctnr {
+  width: 100%;
+  height: 24px;
+  /*background: #ddd;*/
+  text-align: center;
+}
+
+.version-txt {
+  font-size: 12px;
+  color: #666;
+}
+
+.description {
+  margin:0 24px; font-size:12px;
+  padding: 0 10px 20px 10px;
 }

@@ -1,7 +1,8 @@
 <!--
-Create tabs with an icon and label, using the tabs-positive style.
-Each tab's child <ion-nav-view> directive will have its own
-navigation history that also transitions its views in and out.
+// 规则说明：@2016/03/29
+// 与app.js定义关系：
+// 由根URL /dash 和state/url 接起来构成 ion-tab对应的href
+// 由state/views对象的key，对应tabs.html/ion-nav-view的name参数
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
@@ -11,13 +12,18 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
   <!-- Chats Tab -->
-  <ion-tab title="车辆管理" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/chats">
+  <ion-tab title="车辆管理" icon-off="ion-ios-browsers-outline" icon-on="ion-ios-browsers" href="#/tab/chats">
     <ion-nav-view name="tab-chats"></ion-nav-view>
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="我的账号" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
+  <ion-tab title="设置" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
     <ion-nav-view name="tab-account"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Account Tab -->
+  <ion-tab title="关于" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" href="#/tab/about">
+    <ion-nav-view name="tab-about"></ion-nav-view>
   </ion-tab>
 
 

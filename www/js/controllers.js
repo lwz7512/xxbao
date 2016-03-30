@@ -178,6 +178,10 @@ angular.module('starter.controllers', [])
 // -- 我的账号 --
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true
+    enableFriends: false
   };
+})
+// -- 我的账号 --
+.controller('AboutCtrl', function($scope) {
+
 });

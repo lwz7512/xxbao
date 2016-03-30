@@ -51,7 +51,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'GlobalCtrl'
   })
 
-  // Each tab has its own nav history stack:
+  // 规则说明：@2016/03/29
+  // 由根URL /dash 和state/url 接起来构成 ion-tab对应的href
+  // 由state/views对象的key，对应tabs.html/ion-nav-view的name参数
 
   .state('tab.dash', {
     url: '/dash',
@@ -72,15 +74,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
+  .state('tab.chat-detail', {
+    url: '/chats/:chatId',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/chat-detail.html',
+        controller: 'ChatDetailCtrl'
       }
-    })
+    }
+  })
+
+  .state('tab.about', {
+    url: '/about',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/tab-about.html',
+        controller: 'AboutCtrl'
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
