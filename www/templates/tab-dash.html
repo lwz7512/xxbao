@@ -1,7 +1,42 @@
-<ion-view view-title="今日({{todayName}})限行尾号">
-  <ion-content class="padding">
-    <div class="list card margin-top-0">
-      <!-- <div class="item item-divider">今日限行尾号</div> -->
+<!-- 今日限行 -->
+<ion-view view-title="今天是 : {{selectedDate}}">
+  <ion-content class=" slick-ctnr ">
+    <!-- 旋转木马幻灯片 -->
+    <div class="padding">
+      <div class="center-mode margin-bottom-10px" ng-show="spmode">
+        <div><h3 class="positive-bg">星期一</h3></div>
+        <div><h3 class="calm-bg">星期二</h3></div>
+        <div><h3 class="balanced-bg">星期三</h3></div>
+        <div><h3 class="energized-bg">星期四</h3></div>
+        <div><h3 class="assertive-bg">星期五</h3></div>
+        <div><h3 class="royal-bg">星期六</h3></div>
+        <div><h3 class="dark-bg">星期日</h3></div>
+      </div>
+    </div>
+    <!-- 出行提示 -->
+    <div class="list" ng-show="spmode">
+      <div class="item item-divider">
+        限行尾号
+      </div>
+      <a class="item center" href="#">
+        <span class="large-font-ls red ">{{todayNums.toString()}}</span>
+      </a>
+      <div class="item item-divider">
+        可行车辆
+      </div>
+      <div class="item item-button-right" ng-repeat="car in availableCars">
+        {{car.carnumber}}
+        <button class="button button-positive button-clear" ng-click="dispatch(car)">
+          {{car.status?'已派':'派车'}}
+        </button>
+      </div>
+      <p class="advanced-panel" ng-if="!availableCars.length">
+        {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
+      </p>
+    </div>
+    <!-- 卡片一 -->
+    <div class="list card margin-top-0" ng-hide="spmode">
+      <div class="item item-divider">限行尾号</div>
       <div class="item item-body">
         <div class="center margin-top-20">
            <span class="large-font red ">{{todayNums.toString()}}</span>
@@ -14,7 +49,8 @@
         <i class="icon ion-loop"></i>更新有效期
       </div> -->
     </div>
-    <div class="list card">
+    <!-- 卡片二 -->
+    <div class="list card" ng-hide="spmode">
       <div class="item item-divider">单双号限行吗</div>
       <div class="item item-toggle">
         是就点一下右边
@@ -26,7 +62,8 @@
         </label>
       </div>
     </div>
-    <div class="list card">
+    <!-- 卡片三 -->
+    <div class="list card" ng-hide="spmode">
       <div class="item item-divider">今日可行车辆</div>
       <div class="item padding-10">
         <div class="list">
@@ -42,5 +79,6 @@
         </div>
       </div>
     </div>
+    <!-- 首页内容结束 -->
   </ion-content>
 </ion-view>

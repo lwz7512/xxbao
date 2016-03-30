@@ -1,8 +1,8 @@
-<ion-view view-title="我的账号">
+<ion-view view-title="个性化设置">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        首页使用精简模式
+    <ion-toggle  ng-model="settings.enableCards" ng-change="toggleMe();">
+        首页使用卡片模式
     </ion-toggle>
     </ion-list>
   </ion-content>

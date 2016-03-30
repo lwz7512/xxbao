@@ -40,30 +40,53 @@ angular.module('starter.controllers', [])
   moment.locale('zh-cn');
 
 })
-// -- 今日限行 --
-.controller('DashCtrl', function($scope, $rootScope, $log, $timeout, Calculator, DB, Cars) {
+// --------------------- 今日限行 -----------------------------------------------
+.controller('DashCtrl', function($scope, $rootScope, $log, $timeout, Calculator, DB, Cars, Histories) {
   var self = this;
 
   $scope.car = {};
   $scope.todayNums = [];//今日限行尾号
   $scope.todayName = moment.weekdays()[moment().day()];//星期几？
   $scope.validPeriod = '2015年4月13日 ~ 2016年4月10日';
+  $scope.selectedDate = moment().format('YYYY-MM-DD');
   var now = moment();
   if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
   //Today available cars...
   $scope.availableCars = [];
-  $scope.totalCars = [];
+  // $scope.totalCars = [];
 
+
+  // 精简显示模式
+  $scope.spmode = window.localStorage.getItem('enableCards')=='true'?false:true;
+  // $scope.spmode = false;
+
+  $('.center-mode').slick({
+    centerMode: true,
+    centerPadding: '60px',
+  });
+  // On before slide change
+  $('.center-mode').on('afterChange', function(event, slick, currentSlide, nextSlide){
+    // console.log(currentSlide);
+    var todayCtrlNum = Calculator.calculate(currentSlide);
+    $scope.todayNums = todayCtrlNum.split(',');
+    self.filter();
+  });
+  //默认指向今天
+  $('.center-mode').slick('slickGoTo', moment().day()-1);
+
+
+  // 获得今天的限行尾号
   self.init = function(){
-    // var todayCtrlNum = '4,9';
     var todayCtrlNum = Calculator.calculate();
     $scope.todayNums = todayCtrlNum.split(',');
-  }
+  };
 
   self.filter = function(){
     var toRemoved = [];
     Cars.all().then(function(result){
-      $scope.totalCars = result;
+      // 记下所有的车辆供其他模块使用 @2016/03/30
+      $rootScope.totalCars = result;
+
       $scope.availableCars = result;
       for(var i in $scope.availableCars){
         var carnumber = $scope.availableCars[i]['carnumber'];
@@ -78,7 +101,7 @@ angular.module('starter.controllers', [])
         $scope.availableCars.splice(index, 1);
       }
     });
-  }
+  };
 
   $scope.showHalfStop = function(){
     // $log.debug($scope.car);
@@ -105,6 +128,12 @@ angular.module('starter.controllers', [])
         $scope.$apply();
       });
     });
+    // TODO， 在行车记录中加一条 @2016/03/30
+    var timestamp = Number(moment().format('X'));
+    Histories.insert(car.id, timestamp).then(function(r){
+      // console.log('history inserted!');
+      // console.log(r);
+    });
   };
 
   // while switch in from other menu
@@ -114,13 +143,20 @@ angular.module('starter.controllers', [])
     $scope.showHalfStop();
   });
 
+  // $rootScope.$on('dbReady', function(e){
+  //   console.log('db is ready!');
+  //   $scope.$parent.alert('db is ready!');
+  // });
+
+  // 每次进入该页面执行车辆过滤
   $timeout(function(){
     self.filter();
   }, 500);//waiting database available...
 
   self.init();
+
 })
-// -- 车辆管理 --
+// ------------------ 车辆管理 --------------------------------------------------
 .controller('ChatsCtrl', function($scope, $log, $timeout, Cars) {
   var self = this;
 
@@ -175,11 +211,39 @@ angular.module('starter.controllers', [])
   };
 
 })
+// -- 行车历史 --
+.controller('ChatHistoryCtrl', function($rootScope, $scope, $stateParams, $log, Histories){
+  var carID = $stateParams.carID;
+  var totalCars = {};
+  for(var i in $rootScope.totalCars){
+    var id = $rootScope.totalCars[i]['id'];
+    var carnumber = $rootScope.totalCars[i]['carnumber'];
+    totalCars[id] = carnumber;
+  }
+  $scope.histories = [];//绑定到列表
+  // TODO, 查询行车历史
+  Histories.getHisBy(carID).then(function(results){
+    for(var i in results){
+      results[i]['carnumber'] = totalCars[results[i]['carid']];
+      results[i]['timestamp'] = moment.unix(results[i]['work_time']).format('YYYY-MM-DD HH:mm');
+    }
+    $scope.histories = results;//绑定到视图
+    // console.log(results);
+  });
+})
 // -- 我的账号 --
 .controller('AccountCtrl', function($scope) {
+  var status = window.localStorage.getItem('enableCards')=='true'?true:false;
   $scope.settings = {
-    enableFriends: false
+    enableCards: status,
   };
+  // 不能写toggle命名该函数 @2016/03/30
+  $scope.toggleMe = function(){
+    console.log($scope.settings.enableCards);
+    var status = $scope.settings.enableCards;
+    window.localStorage.setItem('enableCards', status);
+  };
+
 })
 // -- 我的账号 --
 .controller('AboutCtrl', function($scope) {

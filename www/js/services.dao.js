@@ -67,4 +67,29 @@ angular.module('starter.services')
   };
 
   return self;
+})
+
+.factory('Histories', function (DB, $log) {
+  var self = this;
+
+  self.insert = function (carid, work_time) {
+    var sql = "INSERT INTO histories (carid,work_time)";
+    sql += " VALUES(";
+    sql += carid + ",";
+    sql += work_time + ")";
+    // console.debug(sql);
+    return DB.query(sql).then(function (result) {
+      return result;
+    });
+  };
+
+  self.getHisBy = function (carID) {
+    return DB.query('SELECT * FROM histories WHERE carid = ? ORDER BY work_time DESC', [carID])
+      .then(function (result) {
+        return DB.fetchAll(result);
+      });
+  };
+
+
+  return self;
 });

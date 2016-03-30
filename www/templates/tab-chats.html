@@ -1,10 +1,12 @@
+<!-- 车辆管理 -->
 <ion-view view-title="我的车辆">
   <ion-nav-buttons side="right">
-    <a class="button button-clear button-positive" style="margin-right: 15px;" href="#/tab/chats/0">添加</a>
+    <a class="button button-clear button-positive" style="margin-right: 15px;" href="#/tab/chats/add">添加</a>
   </ion-nav-buttons>
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="car in cars" type="item-text-wrap" href="#">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="car in cars"
+        type="item-text-wrap" href="#/tab/chats/{{car.id}}">
         <img ng-src="img/{{car.type?'car-public.png':'car-private.png'}}">
         <h2>{{car.type?'公车':'私车'}} : {{car.carnumber}}</h2>
         <p>{{car.title}}</p>

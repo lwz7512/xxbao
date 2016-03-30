@@ -35,7 +35,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  // 禁用视图缓存 @2016/03/30
+  // 不然切换视图设置时，不重新初始化
+  $ionicConfigProvider.views.maxCache(0);
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -52,6 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   // 规则说明：@2016/03/29
+  // 子状态名称规则：父状态名称 + '.' + 子模块名称
   // 由根URL /dash 和state/url 接起来构成 ion-tab对应的href
   // 由state/views对象的key，对应tabs.html/ion-nav-view的name参数
 
@@ -74,12 +78,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-  .state('tab.chat-detail', {
-    url: '/chats/:chatId',
+  .state('tab.chat-add', {
+    url: '/chats/add',
     views: {
       'tab-chats': {
         templateUrl: 'templates/chat-detail.html',
         controller: 'ChatDetailCtrl'
+      }
+    }
+  })
+  .state('tab.chat-history', {//查看行车历史
+    url: '/chats/:carID',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/chat-history.html',
+        controller: 'ChatHistoryCtrl'
       }
     }
   })

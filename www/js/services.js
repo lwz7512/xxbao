@@ -24,11 +24,19 @@ angular.module('starter.services', [])
     '2017-01-08 2017-04-08':['4,9','5,0','1,6','2,7','3,8'],
   };
 
-  function calculateTodayCtrlNum(){
+  /**
+   * 计算周几限行号码，不传参数默认计算今天
+   * @param  {[type]} day 周几 - 1
+   * @return {[type]}     [description]
+   * @2016/03/30
+   */
+  function calculateTodayCtrlNum(day){
     // $log.debug(moment().format('L'));
     var currentProtocol = ctrlprotocol_2015;
     var now = moment();
     if(now.isAfter('2016-04-11')) currentProtocol = ctrlprotocol_2016;
+    // 2016/03/30添加周几参数
+    if(day) now = moment().startOf('week').add(day, 'days');
 
     for(var key in currentProtocol){
       var startDate = moment(key.split(' ')[0]);

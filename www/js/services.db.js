@@ -1,30 +1,6 @@
 angular.module('starter.services')
 
 // **************** camera/DB service @2015/08/25 *********************
-.factory('CameraSrv', function(){
-    var self = this;
-
-    self.shoot = function(onPhotoSuccess, onPhotoFailure) {
-    if(navigator.camera) {
-      var photoOpt = {
-        quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
-        allowEdit : true,
-        encodingType: Camera.EncodingType.JPEG,//use jpeg to corresponding data:image/jpeg
-        targetWidth: 100,
-        targetHeight: 100,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false
-      };
-      navigator.camera.getPicture(onPhotoSuccess, onPhotoFailure, photoOpt);
-    }else{
-      console.error("camera not exist!");
-    }
-  };
-
-    return self;
-})
-
 // ************* DB wrapper service ******************
 .factory('DB', function($q, $log, $rootScope) {
     var self = this;
@@ -36,8 +12,8 @@ angular.module('starter.services')
           self.db = window.sqlitePlugin.openDatabase(
               {name: 'xxbao'},
               function(){//ok callback
-                  self.available = true;
-                  $(document).trigger('dbReady');
+                self.available = true;
+                $rootScope.$broadcast('dbReady');//只派发一次
               });
       }else{// Use below in development
           var maxSize = 655360; // in bytes, 650k
@@ -69,6 +45,25 @@ angular.module('starter.services')
       }
       var query = 'CREATE TABLE IF NOT EXISTS ' + cars.name + ' (' + columns.join(',') + ')';
       self.query(query);
+
+      // 行车记录 @2016/03/30
+      var histories = {
+        name: 'histories',
+        columns: [
+            {name: 'id', type: 'integer primary key'},
+            {name: 'carid', type: 'integer'},
+            {name: 'work_time', type: 'integer'}
+        ]
+      };
+      columns = [];
+      column;
+      for(var i in histories.columns){
+        column = histories.columns[i];
+        columns.push(column.name + ' ' + column.type);
+      }
+      query = 'CREATE TABLE IF NOT EXISTS ' + histories.name + ' (' + columns.join(',') + ')';
+      self.query(query);
+
     };
 
 
