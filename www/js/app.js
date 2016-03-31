@@ -10,11 +10,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 .run(function($ionicPlatform, $log, DB) {
   $ionicPlatform.ready(function() {
 
-    //manual hide splash now, @2015/10/30
-    setTimeout(function() {
-      if(!navigator.splashscreen) return;
-      navigator.splashscreen.hide();
-    }, 100);
+    //manual hide splash now, @2016/03/31
+    if(navigator.splashscreen) navigator.splashscreen.hide();
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -46,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  // setup an abstract state for the tabs directive
+  // 所有模块的根路径 @2016/03/31
   .state('tab', {
     url: '/tab',
     abstract: true,
@@ -102,6 +99,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-about': {
         templateUrl: 'templates/tab-about.html',
+        // controller: 'AboutCtrl'
+      }
+    }
+  })
+  .state('tab.contactus', {
+    url: '/about/contactus',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/tab-contactus.html',
+        // controller: 'AboutCtrl'
+      }
+    }
+  })
+  .state('tab.products', {
+    url: '/about/products',
+    views: {
+      'tab-about': {
+        templateUrl: 'templates/tab-products.html',
         controller: 'AboutCtrl'
       }
     }

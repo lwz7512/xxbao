@@ -30,7 +30,7 @@
           {{car.status?'已派':'派车'}}
         </button>
       </div>
-      <p class="advanced-panel" ng-if="!availableCars.length">
+      <p class="advanced-panel padding" ng-if="!availableCars.length">
         {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
       </p>
     </div>
@@ -73,10 +73,10 @@
               {{car.status?'已派':'派车'}}
             </button>
           </div>
-          <p class="advanced-panel" ng-if="!availableCars.length">
-            {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
-          </p>
         </div>
+        <p class="advanced-panel" ng-if="!availableCars.length">
+          {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
+        </p>
       </div>
     </div>
     <!-- 首页内容结束 -->

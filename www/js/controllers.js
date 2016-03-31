@@ -53,7 +53,7 @@ angular.module('starter.controllers', [])
   if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
   //Today available cars...
   $scope.availableCars = [];
-  // $scope.totalCars = [];
+  $scope.totalCars = [];//这个必须有，初始化安装时需要提示用 @2016/03/31
 
 
   // 精简显示模式
@@ -86,7 +86,7 @@ angular.module('starter.controllers', [])
     Cars.all().then(function(result){
       // 记下所有的车辆供其他模块使用 @2016/03/30
       $rootScope.totalCars = result;
-
+      // 从总量中过滤
       $scope.availableCars = result;
       for(var i in $scope.availableCars){
         var carnumber = $scope.availableCars[i]['carnumber'];
@@ -239,7 +239,7 @@ angular.module('starter.controllers', [])
   };
   // 不能写toggle命名该函数 @2016/03/30
   $scope.toggleMe = function(){
-    console.log($scope.settings.enableCards);
+    // console.log($scope.settings.enableCards);
     var status = $scope.settings.enableCards;
     window.localStorage.setItem('enableCards', status);
   };

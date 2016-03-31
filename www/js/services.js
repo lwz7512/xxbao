@@ -36,7 +36,8 @@ angular.module('starter.services', [])
     var now = moment();
     if(now.isAfter('2016-04-11')) currentProtocol = ctrlprotocol_2016;
     // 2016/03/30添加周几参数
-    if(day) now = moment().startOf('week').add(day, 'days');
+    // 如果没有参数是今天
+    if(typeof day != 'undefined') now = moment().startOf('week').add(day, 'days');
 
     for(var key in currentProtocol){
       var startDate = moment(key.split(' ')[0]);
