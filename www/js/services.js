@@ -45,14 +45,15 @@ angular.module('starter.services', [])
       // $log.debug(startDate.unix());
       // $log.debug(endDate.unix());
       if(now.isBefore(endDate) && now.isAfter(startDate)){
-        if(now.day()>5 || !now.day()) return '-,-';//周末周日不限行
-
+        // 取星期几来判断
+        if(now.day()>5 || !now.day()) return '^_^';//周末周日不限行
+        // 周几比数组索引大1
         var todayCtrlNum = currentProtocol[key][now.day()-1];
         //$log.debug(todayCtrlNum);
         return todayCtrlNum;
       }
     }
-    return '-,-';
+    return '^_^';
   }
 
   return {

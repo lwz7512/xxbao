@@ -19,7 +19,7 @@
         限行尾号
       </div>
       <a class="item center" href="#">
-        <span class="large-font-ls red ">{{todayNums.toString()}}</span>
+        <span class="large-font-ls {{color}} shadow-black">{{todayNums.toString()}}</span>
       </a>
       <div class="item item-divider">
         可行车辆
@@ -27,11 +27,11 @@
       <div class="item item-button-right" ng-repeat="car in availableCars">
         {{car.carnumber}}
         <button class="button button-positive button-clear" ng-click="dispatch(car)">
-          {{car.status?'已派':'派车'}}
+          {{car.status?'走了':'走起'}}
         </button>
       </div>
       <p class="advanced-panel padding" ng-if="!availableCars.length">
-        {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
+        {{totalCars?'今天都被限行了':'您需要在车辆管理中添加'}}
       </p>
     </div>
     <!-- 卡片一 -->
@@ -75,7 +75,7 @@
           </div>
         </div>
         <p class="advanced-panel" ng-if="!availableCars.length">
-          {{totalCars.length?'一个都没有':'您需要在车辆管理中添加'}}
+          {{totalCars?'今天都被限行了':'您需要在车辆管理中添加'}}
         </p>
       </div>
     </div>

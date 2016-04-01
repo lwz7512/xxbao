@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
 // --------------------- 今日限行 -----------------------------------------------
 .controller('DashCtrl', function($scope, $rootScope, $log, $timeout, Calculator, DB, Cars, Histories) {
   var self = this;
-
+  var themes = ['positive', 'calm', 'balanced', 'energized', 'assertive', 'royal', 'dark'];
   $scope.car = {};
   $scope.todayNums = [];//今日限行尾号
   $scope.todayName = moment.weekdays()[moment().day()];//星期几？
@@ -53,8 +53,8 @@ angular.module('starter.controllers', [])
   if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
   //Today available cars...
   $scope.availableCars = [];
-  $scope.totalCars = [];//这个必须有，初始化安装时需要提示用 @2016/03/31
-
+  $scope.totalCars = 0;//这个必须有，初始化安装时需要提示用 @2016/03/31
+  $scope.color = 'dark';//尾号风格
 
   // 精简显示模式
   $scope.spmode = window.localStorage.getItem('enableCards')=='true'?false:true;
@@ -66,7 +66,7 @@ angular.module('starter.controllers', [])
   });
   // On before slide change
   $('.center-mode').on('afterChange', function(event, slick, currentSlide, nextSlide){
-    // console.log(currentSlide);
+    $scope.color = themes[currentSlide];
     var todayCtrlNum = Calculator.calculate(currentSlide);
     $scope.todayNums = todayCtrlNum.split(',');
     self.filter();
@@ -86,6 +86,7 @@ angular.module('starter.controllers', [])
     Cars.all().then(function(result){
       // 记下所有的车辆供其他模块使用 @2016/03/30
       $rootScope.totalCars = result;
+      $scope.totalCars = result.length;//记下总数@2016/03/31
       // 从总量中过滤
       $scope.availableCars = result;
       for(var i in $scope.availableCars){
@@ -175,15 +176,15 @@ angular.module('starter.controllers', [])
     $scope.cars = result;
   });
 
-  $scope.$on('$ionicView.enter', function(e) {
-    if(Cars.new){
-      $scope.cars.push(Cars.new);
-      delete Cars.new;
-    }
-    $timeout(function(){
-      $scope.$apply();
-    });
-  });
+  // $scope.$on('$ionicView.enter', function(e) {
+  //   if(Cars.new){
+  //     $scope.cars.push(Cars.new);
+  //     delete Cars.new;
+  //   }
+  //   $timeout(function(){
+  //     $scope.$apply();
+  //   });
+  // });
 
   $scope.remove = function(carid){
     // $log.debug('delete: '+carid);

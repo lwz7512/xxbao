@@ -41,6 +41,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+  //
+  // 规则说明：@2016/03/29
+  // 子状态名称规则：父状态名称 + '.' + 子模块名称
+  // 由根URL /dash 和state/url 接起来构成 ion-tab对应的href
+  // 由state/views对象的key，对应tabs.html/ion-nav-view的name参数
   $stateProvider
 
   // 所有模块的根路径 @2016/03/31
@@ -50,11 +55,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/tabs.html',
     controller: 'GlobalCtrl'
   })
-
-  // 规则说明：@2016/03/29
-  // 子状态名称规则：父状态名称 + '.' + 子模块名称
-  // 由根URL /dash 和state/url 接起来构成 ion-tab对应的href
-  // 由state/views对象的key，对应tabs.html/ion-nav-view的name参数
 
   .state('tab.dash', {
     url: '/dash',
@@ -117,7 +117,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-about': {
         templateUrl: 'templates/tab-products.html',
-        controller: 'AboutCtrl'
+        // controller: 'AboutCtrl'
       }
     }
   })

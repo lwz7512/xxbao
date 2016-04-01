@@ -9,6 +9,10 @@
 .item h2.margin-bottom-10px {
   margin-bottom: 10px;
 }
+.item-body p.no-margin {
+  margin-top: 0;
+}
+
 .large-font {
   font-size: 64px;
 }
@@ -16,6 +20,11 @@
 .large-font-ls {
   font-size: 48px;
 }
+
+.shadow-black {
+  text-shadow: 2px 2px 4px #333333;
+}
+
 
 .red {
   color: #FF0000;
@@ -76,6 +85,10 @@
 img.center {
   display:block;
   margin:0 auto;
+}
+
+img.full-width {
+  width: 100%;
 }
 
 .version-ctnr {
