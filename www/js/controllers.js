@@ -77,6 +77,8 @@ angular.module('starter.controllers', [])
 
   // 获得今天的限行尾号
   self.init = function(){
+    if($scope.spmode) return;//FIXME, 默认不执行，只有卡片模式才执行 @2016/04/11
+
     var todayCtrlNum = Calculator.calculate();
     $scope.todayNums = todayCtrlNum.split(',');
   };

@@ -34,10 +34,14 @@ angular.module('starter.services', [])
     // $log.debug(moment().format('L'));
     var currentProtocol = ctrlprotocol_2015;
     var now = moment();
+
     if(now.isAfter('2016-04-11')) currentProtocol = ctrlprotocol_2016;
     // 2016/03/30添加周几参数
     // 如果没有参数是今天
+    // 这时变成 00:00:00
     if(typeof day != 'undefined') now = moment().startOf('week').add(day, 'days');
+    // FIXME, 填上时分秒 @2016/04/11
+    now.hours(moment().hour()).minutes(moment().minute()).seconds(moment().second());
 
     for(var key in currentProtocol){
       var startDate = moment(key.split(' ')[0]);
@@ -49,7 +53,7 @@ angular.module('starter.services', [])
         if(now.day()>5 || !now.day()) return '^_^';//周末周日不限行
         // 周几比数组索引大1
         var todayCtrlNum = currentProtocol[key][now.day()-1];
-        //$log.debug(todayCtrlNum);
+
         return todayCtrlNum;
       }
     }
