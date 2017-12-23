@@ -24,6 +24,13 @@ angular.module('starter.services', [])
     '2017-01-08 2017-04-08':['4,9','5,0','1,6','2,7','3,8'],
   };
 
+  var ctrlprotocol_2017 = {
+    '2017-04-10 2017-07-09':['3,8','4,9','5,0','1,6','2,7'],
+    '2017-07-10 2017-10-08':['2,7','3,8','4,9','5,0','1,6'],
+    '2017-10-09 2018-01-07':['1,6','2,7','3,8','4,9','5,0'],
+    '2018-01-08 2018-04-08':['5,0','1,6','2,7','3,8','4,9'],
+  };
+
   /**
    * 计算周几限行号码，不传参数默认计算今天
    * @param  {[type]} day 周几 - 1
@@ -32,10 +39,11 @@ angular.module('starter.services', [])
    */
   function calculateTodayCtrlNum(day){
     // $log.debug(moment().format('L'));
-    var currentProtocol = ctrlprotocol_2015;
+    // var currentProtocol = ctrlprotocol_2015;
+    var currentProtocol = ctrlprotocol_2017;
     var now = moment();
+    // if(now.isAfter('2016-04-11')) currentProtocol = ctrlprotocol_2016;
 
-    if(now.isAfter('2016-04-11')) currentProtocol = ctrlprotocol_2016;
     // 2016/03/30添加周几参数
     // 如果没有参数是今天
     // 这时变成 00:00:00

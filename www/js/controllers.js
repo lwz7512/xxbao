@@ -47,10 +47,11 @@ angular.module('starter.controllers', [])
   $scope.car = {};
   $scope.todayNums = [];//今日限行尾号
   $scope.todayName = moment.weekdays()[moment().day()];//星期几？
-  $scope.validPeriod = '2015年4月13日 ~ 2016年4月10日';
+  // $scope.validPeriod = '2015年4月13日 ~ 2016年4月10日';
+  $scope.validPeriod = '2017年4月10日 ~ 2018年4月8日';
   $scope.selectedDate = moment().format('YYYY-MM-DD');
   var now = moment();
-  if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
+  // if(now.isAfter('2016-04-11')) $scope.validPeriod = '2016年4月11日 ~ 2017年4月8日';
   //Today available cars...
   $scope.availableCars = [];
   $scope.totalCars = 0;//这个必须有，初始化安装时需要提示用 @2016/03/31
